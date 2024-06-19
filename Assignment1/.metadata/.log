@@ -1,0 +1,32 @@
+!SESSION 2024-05-24 14:25:55.693 -----------------------------------------------
+eclipse.buildId=4.31.0.20240307-1200
+java.version=17.0.11
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=aarch64, WS=cocoa, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product -keyring /Users/chrissygonzalez/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch aarch64 -product org.eclipse.epp.package.jee.product -keyring /Users/chrissygonzalez/.eclipse_keyring
+
+!ENTRY org.eclipse.emf.ecore 2 0 2024-05-24 14:25:56.924
+!MESSAGE Both 'org.eclipse.jst.j2ee.core' and 'org.eclipse.jst.j2ee.core' register a package for 'application.xmi'
+
+!ENTRY ch.qos.logback.classic 1 0 2024-05-24 14:25:57.058
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2024-05-24 14:26:14.221
+!MESSAGE Logback config file: /Users/chrissygonzalez/Desktop/_Intro to Java/Assignment1/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.6.0.20240217-1525.xml
+
+!ENTRY org.eclipse.ui.ide 4 0 2024-05-24 14:27:16.883
+!MESSAGE Could not import project located at /Users/chrissygonzalez/Desktop/_Intro to Java/Assignment1
+!STACK 0
+org.eclipse.ui.internal.wizards.datatransfer.CouldNotImportProjectException: Could not import project located at /Users/chrissygonzalez/Desktop/_Intro to Java/Assignment1
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.toExistingOrNewProject(SmartImportJob.java:555)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.run(SmartImportJob.java:246)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Invalid project description.
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:211)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:95)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:305)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:291)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.createOrImportProject(SmartImportJob.java:594)
+	at org.eclipse.ui.internal.wizards.datatransfer.SmartImportJob.toExistingOrNewProject(SmartImportJob.java:542)
+	... 2 more
