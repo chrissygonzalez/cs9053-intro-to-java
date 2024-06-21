@@ -1,6 +1,7 @@
 package PartI;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class Contractor extends Employee{
 	private String contractCompany;
@@ -17,6 +18,24 @@ public class Contractor extends Employee{
 		super(name, age, gender, salary, title, date);
 		this.endDate = endDate;
 		this.contractCompany = contractCompany;
+	}
+	
+	public Contractor(String name, 
+			int age, 
+			char gender, 
+			int salary, 
+			String title, 
+			LocalDate date,
+			String contractCompany,
+			String endDate) {
+		super(name, age, gender, salary, title, date);
+		this.contractCompany = contractCompany;
+		try {
+			LocalDate end = LocalDate.parse(endDate);
+			this.endDate = end;
+		} catch(DateTimeParseException e) {
+			System.err.println("Please enter the end date in the format yyyy-mm-dd.");
+		}
 	}
 	
 	public void setContractCompany(String company) {
