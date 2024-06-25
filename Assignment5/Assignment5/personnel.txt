@@ -1,0 +1,21 @@
+Faculty,Laurence Castaneda,57,M,139145,Full Professor,09-01-2001,true,Computer Science
+Contractor,Jackson Coffey,31,M,85693,Developer,05-03-2020,Technology Systems,08-31-2025
+Faculty,Naomi Fowler,49,F,128158,Full Professor,06-01-2006,true,Civil Engineering
+Staff,Jayden Connolly,47,M,84059,Course Coordinator,03-02-2019,
+Faculty,Darren White,39,M,93873,Associate Professor,08-01-2015,true,Biology
+Contractor,Jamil Cordova,51,M,85225,IT Administrator,02-05-2022,Staffing Solutions,08-31-2024
+Staff,Keane Bradford,48,F,102251,Lab Technician,10-15-2008,Jayden Connolly
+Staff,Tasnim OQuinn,47,F,109779,Media Specialist,08-09-2017,Jayden Connolly
+SpecialStudent,Hannah Oneill,20,F,Electrical Engineering,06-31-2024
+SpecialStudent,Jeremiah Lam,29,M,Psychology,08-31-2025
+Administrator,Jamie Cooper,57,M,232575,Dean of Faculty,09-15-2020,Level 10
+Contractor,Samara Walsh,24,F,100881,Consultant,10-20-2023,Anaventure Corp,08-31-2024
+UndergraduateStudent,Evangeline Kidd,21,F,Nuclear Engineering,2025
+GraduateStudent,Osman Galvan,30,M,Civil Engineering,Naomi Fowler
+GraduateStudent,Laila Perry,30,F,Computer Science,Laurence Castaneda
+UndergraduateStudent,Wilbur Newton,19,M,Writing,2028
+Faculty,Sylvia Adams,29,F,81906,Lecturer,09-01-2023,false,Mechanical Engineering
+Staff,Hussein Irwin,48,M,133902,Network Specialist,04-15-2005,Jayden Connolly
+SpecialStudent,Linda Johns,44,F,History,12-31-2025
+GraduateStudent,Zayd Reese,22,M,Biology,Darren White
+SpecialStudent,Keyaan Bradshaw,43,M,English,08-31-2024
