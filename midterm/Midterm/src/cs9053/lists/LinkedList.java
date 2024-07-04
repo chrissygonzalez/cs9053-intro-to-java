@@ -39,6 +39,24 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 	};
 	
 	public void add(E e, int i) {
+		// check if index is out of bounds
+		if(i > this.size) return;
+		
+		// inserting at head
+		if(i == 0) {
+			if(this.head == null) {
+				Node<E> n = new Node<E>(e);
+				this.head = n;
+				this.tail = n;
+			} else {
+				Node<E> n = new Node<E>(e);
+				n.setNext(this.head);
+				this.head = n;
+			}
+			this.size++;
+			return;
+		}
+		
 		Node<E> prev = getNode(i - 1);
 		Node<E> node = prev != null ? prev.getNext() : null;
 		
@@ -61,7 +79,7 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 	
 	public E remove(int i) {
 		// no nodes or index higher than available nodes
-		if(this.size == 0  || i > this.size - 1) {
+		if(i > this.size - 1) {
 			return null;
 		}
 		
@@ -133,6 +151,7 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 			}
 		}
 		
+		this.size--;
 		this.head = n.getNext();
 		return n.getVal();
 	}
@@ -164,6 +183,18 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 		}
 		
 		return n.getVal();
+	}
+	
+	public String toString() {
+		String s = "";
+		Node<E> n = this.head;
+		System.out.print("{ ");
+		while(n != null) {
+			s = s + n + " ";
+			n = n.getNext();
+		}
+		s = s + "}\n";
+		return s;
 	}
 	
 	// private helper for LinkedList
@@ -216,6 +247,10 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 		
 		public void setVal(F f) {
 			this.value = f;
+		}
+		
+		public String toString() {
+			return this.value.toString();
 		}
 	}
 }
