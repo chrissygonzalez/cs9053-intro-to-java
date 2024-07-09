@@ -6,4 +6,5 @@ public interface Queue<E> {
 	E peek();
 	E poll();
 	E element();
+	int size();
 }

@@ -5,6 +5,7 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 	private Node<E> head;
 	private Node<E> tail;
 	
+	// LinkedList methods
 	public LinkedList() {
 		this.head = null;
 		this.tail = null;
@@ -12,19 +13,16 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 	}
 	
 	public E getHead(){
-		if(this.head != null) {
-			return this.head.value;
-		}
-		return null;
+		if(this.head == null) return null;
+		return this.head.value;
 	}
 	
 	public E getTail(){
-		if(this.tail != null) {
-			return this.tail.value;
-		}
-		return null;
+		if(this.tail == null) return null;
+		return this.tail.value;
 	}
 	
+	// List methods
 	public void add(E e) {
 		Node<E> n = new Node<E>(e);
 		
@@ -39,10 +37,10 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 	};
 	
 	public void add(E e, int i) {
-		// check if index is out of bounds
-		if(i > this.size) return;
+		// return if index is out of bounds
+		if(i > this.size || i < 0) return;
 		
-		// inserting at head
+		// insert at head
 		if(i == 0) {
 			if(this.head == null) {
 				Node<E> n = new Node<E>(e);
@@ -57,35 +55,29 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 			return;
 		}
 		
+		// insert within list
 		Node<E> prev = getNode(i - 1);
-		Node<E> node = prev != null ? prev.getNext() : null;
-		
-		if(prev != null) {
-			Node<E> n = new Node<E>(e);
-			prev.setNext(n);
-			n.setNext(node);
-			this.size++;
-		}
+		Node<E> node = prev.getNext();
+		Node<E> n = new Node<E>(e);
+		prev.setNext(n);
+		n.setNext(node);
+		this.size++;
 	}
 	
 	public E get(int i) {
 		Node<E> node = getNode(i);
-		if(node != null) {
-			return node.getVal();
-		}
-		
-		return null;
+		if(node == null) return null;
+		return node.getVal();
 	};
 	
 	public E remove(int i) {
-		// no nodes or index higher than available nodes
-		if(i > this.size - 1) {
-			return null;
-		}
+		// return null if index out of bounds
+		if(i > this.size - 1 || i < 0) return null;
 		
-		// removing head: special case if only head exists
+		// removing head
 		if(i == 0) {
 			E value = this.head.getVal();
+			// special case if head was only node
 			if(this.size == 1) {
 				this.head = null;
 				this.tail = null;
@@ -96,12 +88,12 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 			return value;
 		}
 		
-		// list has size, valid index, not removing head
+		// removing from within list
 		Node<E> prev = getNode(i - 1);
 		Node<E> node = prev.getNext();
 		E value = node.getVal();
 		
-		// removing tail
+		// special case if removing tail
 		if(i == this.size - 1) {
 			this.tail = prev;
 		}
@@ -112,10 +104,10 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 	};
 	
 	public void set(E e, int i) {
+		if(i > this.size || i < 0) return;
+		
 		Node<E> node = getNode(i);
-		if(node != null) {
-			node.setVal(e);
-		}
+		node.setVal(e);
 	}
 	
 	public int size() {
@@ -139,17 +131,9 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 		return true;
 	}
 	
-	public E remove() throws NoSuchElementException {
+	public E remove() {
 		Node<E> n = this.head;
-		
-		if(n == null) {
-			try {
-				throw new NoSuchElementException();
-			} catch(NoSuchElementException e) {
-				System.out.println(e.getMessage());
-				return null;
-			}
-		}
+		if(n == null) throw new NoSuchElementException();
 		
 		this.size--;
 		this.head = n.getNext();
@@ -163,32 +147,24 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 	}
 	
 	public E poll() {
-		if(this.head == null) return null;
-		
 		Node<E> n = this.head;
+		if(n == null) return null;
+		
+		this.size--;
 		this.head = n.getNext();
 		return n.getVal();
 	}
 	
-	public E element() throws NoSuchElementException {
+	public E element() {
 		Node<E> n = this.head;
-		
-		if(n == null) {
-			try {
-				throw new NoSuchElementException();
-			} catch(NoSuchElementException e) {
-				System.out.println(e.getMessage());
-				return null;
-			}
-		}
+		if(n == null) throw new NoSuchElementException();
 		
 		return n.getVal();
 	}
 	
 	public String toString() {
-		String s = "";
+		String s = "{ ";
 		Node<E> n = this.head;
-		System.out.print("{ ");
 		while(n != null) {
 			s = s + n + " ";
 			n = n.getNext();
@@ -207,11 +183,7 @@ public class LinkedList<E> extends List<E> implements Queue<E> {
 			count++;
 		}
 		
-		if(node != null) {
-			return node;
-		}
-		
-		return null;
+		return node;
 	}
 	
 	// Node inner class

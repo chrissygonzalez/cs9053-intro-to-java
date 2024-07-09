@@ -24,25 +24,21 @@ public class PriorityQueue<E extends Comparable<E>> extends List<E> implements Q
     }
 	
     // Queue methods
-    // TODO add heapify and call heapify after insert
 	public boolean offer(E e) {
-		int index = this.size() == 0 ? 0 : findAddIndex(e, 0, this.size() - 1);
-		this.add(e, index);
+		data.add(e);
+		heapifyFromBottom(data.size() - 1);
 		return true;
 	}
 	
-	public E remove() throws NoSuchElementException {
-		if(data.size() == 0) {
-			try {
-				throw new NoSuchElementException();
-			} catch(NoSuchElementException e) {
-				System.out.println(e.getMessage());
-			}
-		}
+	public E remove() {
+		if(data.size() == 0) throw new NoSuchElementException();
 		
 		int lastIndex = data.size() - 1;
 		Collections.swap(data, 0, lastIndex);
-		return data.remove(lastIndex);
+		E removed = data.remove(lastIndex);
+		
+		if(lastIndex > 0) heapifyFromTop(0);
+		return removed;
 	}
 	
 	public E peek() {
@@ -55,20 +51,15 @@ public class PriorityQueue<E extends Comparable<E>> extends List<E> implements Q
 		return this.remove();
 	}
 	
-	public E element() throws NoSuchElementException {
-		if(data.size() == 0) {
-			try {
-				throw new NoSuchElementException();
-			} catch(NoSuchElementException e) {
-				System.out.println(e.getMessage());
-			}
-		}
+	public E element() {
+		if(data.size() == 0) throw new NoSuchElementException();
 		return data.get(0);
 	}
 	
 	// List methods
 	public void add(E e) {
-		this.offer(e);
+		data.add(e);
+		heapifyFromBottom(data.size() - 1);
 	}
 	
 	public E get(int i) {
@@ -76,15 +67,22 @@ public class PriorityQueue<E extends Comparable<E>> extends List<E> implements Q
 	}
 	
 	public E remove(int i) {
-		return data.remove(i);
+		if(i < 0 || i > size()) return null;
+		E removed = data.remove(i);
+		if(i == 0) heapifyFromTop(0);
+		return removed;
 	}
 	
 	public void set(E e, int i) {
-		// not sure what to do here
+		data.set(i, e);
+		heapifyFromBottom(i);
 	}
 	
 	public void add(E e, int i) {
-		// not sure what to do here
+		// ignoring the index because we're going to heapify anyway,
+		// and moving elements for no reason is expensive
+		data.add(e);
+		heapifyFromBottom(this.size() - 1);
 	}
 	
 	public int size() {
@@ -95,25 +93,66 @@ public class PriorityQueue<E extends Comparable<E>> extends List<E> implements Q
 		return data.contains(o);
 	}
 	
-	// may not need this method anymore
-	private int findAddIndex(E e, int start, int end) {
-		if(start > end) {
-			return start;
+	public String toString() {
+		String output = "{ ";
+		for(E item : data) {
+			output += item + " ";
 		}
-		int midpoint = (start + end) / 2;
-		E midValue = get(midpoint);
+		output += "}";
+		return output;
+	}
+	
+	// Heap helpers
+	private void heapifyFromBottom(int i) {
+		if(i == 0) return;
+		E newItem = data.get(i);
+		int parentIndex = parent(i);
+		E parent = data.get(parentIndex);
 		
-		// same value
-		if(compare(e, midValue) == 0) {
-			return midpoint;
+		if(compare(newItem, parent) > 0) {
+			Collections.swap(data, i, parentIndex);
+			heapifyFromBottom(parentIndex);
+		}
+	}
+	
+	private void heapifyFromTop(int i) {
+		E node = data.get(i);
+		E max = node;
+		int maxIndex = i;
+		
+		int leftIndex = left(i);
+		if(leftIndex < data.size()) {
+			E leftChild = data.get(leftIndex);
+			if(compare(max, leftChild) < 0) {
+				max = leftChild;
+				maxIndex = leftIndex;
+			}
 		}
 		
-		// value is lower, goes to right
-		if(compare(e, midValue) < 0) {
-			return findAddIndex(e, midpoint + 1, end);
+		int rightIndex = right(i);
+		if(rightIndex < data.size()) {
+			E rightChild = data.get(rightIndex);
+			if(compare(max, rightChild) < 0) {
+				max = rightChild;
+				maxIndex = rightIndex;
+			}
 		}
 		
-		// value is higher, goes to left
-		return findAddIndex(e, start, midpoint - 1);
+		if(max != node) {
+			Collections.swap(data, i, maxIndex);
+			heapifyFromTop(maxIndex);
+		}
+	}
+	
+	private int parent(int i) {
+		return (i - 1) / 2;
+	}
+	
+	private int left(int i) {
+		return 2 * i + 1;
+	}
+	
+	private int right(int i) {
+		return 2 * i + 2;
 	}
 }
