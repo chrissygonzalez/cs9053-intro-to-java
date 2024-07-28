@@ -3,11 +3,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MathSet<E> extends HashSet<E> {
-//	private Set<E> s1;
-	
-	public MathSet(){
-//		this.s1 = new HashSet<E>();
-	}
 	
 	public Set<E> intersection(Set<E> s2) {
 		Set<E> s3 = new HashSet<E>();
