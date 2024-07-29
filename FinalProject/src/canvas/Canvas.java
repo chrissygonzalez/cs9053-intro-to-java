@@ -1,5 +1,6 @@
 package canvas;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,12 +17,14 @@ class Canvas extends JPanel {
 	private Inspector inspector;
 	private NamedRectangle selected;
 	private ShapeList list;
-	private Color strokeColor;
-	private Color selectedColor;
+	private Color defaultStrokeColor;
+	private Color defaultFillColor;
+	private float defaultStrokeWidth;
 	
 	public Canvas() {
-		strokeColor = Color.BLACK;
-		selectedColor = Color.BLUE;
+		defaultStrokeColor = Color.BLACK;
+		defaultFillColor = Color.LIGHT_GRAY;
+		defaultStrokeWidth = 3.0f;
 		shapes = new ArrayList<NamedRectangle>();
 		setBackground(Color.WHITE);
 
@@ -54,20 +57,21 @@ class Canvas extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
-
 		Graphics2D g2d = (Graphics2D)g;
 
 		for (NamedRectangle r : shapes){
-			if(r == selected) {
-				g2d.setColor(selectedColor);
-			} else {
-				g2d.setColor(r.getStrokeColor());
-			}
+			g2d.setStroke(new BasicStroke(r.getStrokeWidth()));
+			g2d.setColor(r.getFillColor());
+			g2d.fill(r.getRectangle());
+			g2d.setColor(r.getStrokeColor());
 			g2d.draw( r.getRectangle() );
 		}
 
 		if (shape != null){
-			g2d.setColor(strokeColor);
+			g2d.setStroke(new BasicStroke(defaultStrokeWidth));
+			g2d.setColor(defaultFillColor);
+			g2d.fill(shape);
+			g2d.setColor(defaultStrokeColor);
 			g2d.draw( shape );
 		}
 	}
@@ -78,6 +82,7 @@ class Canvas extends JPanel {
 		public void mousePressed(MouseEvent e){
 			startPoint = e.getPoint();
 			shape = new Rectangle();
+			if(selected != null) selected.setSelected(false);
 			selected = null;
 			
 			// temporarily selecting shape here
@@ -85,6 +90,7 @@ class Canvas extends JPanel {
 				NamedRectangle r = shapes.get(i);
 				if(r.getRectangle().contains(startPoint)) {
 					selected = r;
+					r.setSelected(true);
 					inspector.updateFields(r.getRectangle());
 					break;
 				}
@@ -104,7 +110,7 @@ class Canvas extends JPanel {
 
 		public void mouseReleased(MouseEvent e){
 			if (shape.width != 0 || shape.height != 0){
-				NamedRectangle rect = new NamedRectangle(e.getComponent().getForeground(), shape);
+				NamedRectangle rect = new NamedRectangle(defaultStrokeColor, defaultFillColor, defaultStrokeWidth, shape);
 				shapes.add(rect);
 				list.updateList();
 			}
