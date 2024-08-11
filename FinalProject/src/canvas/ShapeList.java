@@ -1,6 +1,7 @@
 package canvas;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ public class ShapeList extends JPanel{
 		list.setModel(listModel);
 		
 		scrollPane = new JScrollPane(list);
+		scrollPane.setPreferredSize(new Dimension(110, 175));;
 
 		add(scrollPane, BorderLayout.CENTER);
 	}
